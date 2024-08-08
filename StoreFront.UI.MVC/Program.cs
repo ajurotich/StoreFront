@@ -14,9 +14,9 @@ public class Program {
 		builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 		builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-			.AddEntityFrameworkStores<ApplicationDbContext>()
 			.AddRoles<IdentityRole>()
-			.AddRoleManager<RoleManager<IdentityRole>>();
+			.AddRoleManager<RoleManager<IdentityRole>>()
+			.AddEntityFrameworkStores<ApplicationDbContext>();
 		builder.Services.AddControllersWithViews();
 
 		var app = builder.Build();
