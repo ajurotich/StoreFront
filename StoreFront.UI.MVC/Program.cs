@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using StoreFront.Data.EF.Models;
 using StoreFront.UI.MVC.Data;
 
 namespace StoreFront.UI.MVC;
@@ -11,6 +12,9 @@ public class Program {
 		var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 		builder.Services.AddDbContext<ApplicationDbContext>(options =>
 			options.UseSqlServer(connectionString));
+		builder.Services.AddDbContext<McstoreContext>(options =>
+			options.UseSqlServer(connectionString));
+		
 		builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 		builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
