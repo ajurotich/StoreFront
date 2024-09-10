@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace StoreFront.Data.EF.Models;
 
 public partial class User {
-	public int UserId { get; set; }
+	public string UserId { get; set; }
 
 	public string Name { get; set; } = null!;
 

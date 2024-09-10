@@ -54,7 +54,7 @@ public class BlockMetadata {
 	public bool Flammable { get; set; }
 
 	[DisplayFormat(NullDisplayText = "No image provided")]
-	public byte[]? Image { get; set; }
+	public string? Image { get; set; }
 
 }
 

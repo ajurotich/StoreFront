@@ -1,0 +1,130 @@
+﻿@model IEnumerable<StoreFront.Data.EF.Models.Product>
+
+@{
+	ViewData["Title"] = "Shop";
+}
+
+@section hero {
+	<div class="hero">
+		<div class="container">
+			<div class="col-lg-5">
+				<div class="intro-excerpt">
+					<h1>
+						@ViewData["Title"]
+					</h1>
+					<p class="mb-4">Look at all of our block-terful items!</p>
+					<div class="btn-group" role="group">
+						<button type="button" id="tilesbtn" class="btn btn-secondary">Tiles</button>
+						<button type="button" id="tablebtn" class="btn btn-outline-secondary">Table</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+
+<div class="untree_co-section product-section before-footer-section">
+	<div class="container">
+
+		<div class="row" id="tiles">
+			@foreach(var item in Model) {
+				<div class="col-6 col-md-4 col-lg-3  mb-5">
+					<div class="product-item">
+						<button type="button" class="detailsLink btn bg-transparent border-0" id="@item.ProductId" data-toggle="modal" data-target="#productDetailsModal">
+							<img src="~/images/blocks/t_@item.Block.Image" class="img-fluid product-thumbnail">
+							<h3 class="product-title">@item.Block.Name</h3>
+							<strong class="product-price">
+								@Html.DisplayFor(model => item.Price)
+							</strong>
+
+							<span class="icon-cross">
+								<img src="~/images/cross.svg" class="img-fluid">
+							</span>
+						</button>
+					</div>
+				</div>
+			}
+		</div>
+
+		<div id="table" class="d-none">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="col-2"></th>
+						<th class="col-4">@Html.DisplayNameFor(model => model.Block)</th>
+						<th class="col-2">@Html.DisplayNameFor(model => model.Block.Category)</th>
+						<th class="col-2">@Html.DisplayNameFor(model => model.Block.Source)</th>
+						<th class="col-2">@Html.DisplayNameFor(model => model.Price)</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach(var item in Model) {
+					<tr class="align-middle">
+						<td class="text-center col-2">
+							<button type="button" class="detailsLink btn bg-transparent border-0 p-0" id="@item.ProductId" data-toggle="modal" data-target="#productDetailsModal">
+								<img src="~/images/blocks/t_@item.Block.Image" class="img-fluid product-thumbnail">
+							</button>
+						</td>
+						<td class="col-4">
+							<button type="button" class="detailsLink btn bg-transparent border-0 text-black p-0" id="@item.ProductId" data-toggle="modal" data-target="#productDetailsModal">
+								@Html.DisplayFor(modelItem => item.Block.Name)
+							</button>
+						</td>
+						<td class="col-2">@Html.DisplayFor(modelItem => item.Block.Category.Name)</td>
+						<td class="col-2">@Html.DisplayFor(modelItem => item.Block.Source.Name)</td>
+						<td class="col-2">@Html.DisplayFor(modelItem => item.Price)</td>
+					</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</div>
+
+<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-xl">
+		<div class="modal-content bg-light"></div>
+	</div>
+</div>
+
+
+@section Scripts {
+	<script>
+
+		//showing details modal
+		$('.detailsLink').on('click', function () {
+			let productID = $(this).attr('id');
+
+			$("#productDetailsModal .modal-content").load("/products/DetailsPartial/" + productID);
+
+		})
+
+		//switching between display types
+		$('#tilesbtn').on('click', function () {
+			$(this).removeClass('btn-outline-secondary');
+			$(this).addClass('btn-secondary');
+			$('#tablebtn').removeClass('btn-secondary');
+			$('#tablebtn').addClass('btn-outline-secondary');
+
+			$('#tiles').removeClass('d-none');
+			$('#table').addClass('d-none');
+		})
+		$('#tablebtn').on('click', function () {
+			$(this).removeClass('btn-outline-secondary');
+			$(this).addClass('btn-secondary');
+			$('#tilesbtn').removeClass('btn-secondary');
+			$('#tilesbtn').addClass('btn-outline-secondary');
+
+			$('#table').removeClass('d-none');
+			$('#tiles').addClass('d-none');
+		})
+
+		//data tables
+		$(document).ready(function () {
+			$('.table').DataTable();
+		});
+
+	</script>
+}

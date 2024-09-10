@@ -7,177 +7,226 @@
 */ -->
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="author" content="Untree.co">
-		<link rel="shortcut icon" href="favicon.png">
-	
-		<meta name="description" content="" />
-		<meta name="keywords" content="bootstrap, bootstrap4" />
+<head>
+	<title>Block Store</title>
 
-		<!-- Bootstrap CSS -->
-		<link href="/css/bootstrap.min.css" rel="stylesheet">
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-		<link href="/css/tiny-slider.css" rel="stylesheet">
-		<link href="/css/style.css" rel="stylesheet">
-		<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
-	</head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Untree.co">
+	<link rel="shortcut icon" href="favicon.png">
 
-	<body>
+	<meta name="description" content="" />
+	<meta name="keywords" content="bootstrap, bootstrap4" />
 
-		<!-- Start Header/Navigation -->
-		<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+	<!-- Bootstrap CSS -->
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<!-- DataTables -->
+	<link href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+	<link href="/css/tiny-slider.css" rel="stylesheet">
+	<link href="/css/style.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+</head>
 
-			<div class="container">
-				<a class="navbar-brand" href="~/">Block Store<span>.</span></a>
+<body>
 
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+	<!-- Start Header/Navigation -->
+	<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
-				<div class="collapse navbar-collapse" id="navbarsFurni">
-					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-						<li class="nav-item active">
-							<a class="nav-link" href="~/">Home</a>
+		<div class="container">
+			<a class="navbar-brand" href="~/">Block Store<span>.</span></a>
+
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarsFurni">
+				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+					<li><a class="nav-link" href="~/">Home</a></li>
+					<li><a class="nav-link" asp-action="index" asp-controller="products">Shop</a></li>
+					<li><a class="nav-link disabled text-opacity-25" asp-action="about">About us</a></li>
+					@* <li><a class="nav-link" asp-action="services">Services</a></li> *@
+					@* <li><a class="nav-link" asp-action="blog">Blog</a></li> *@
+
+					@if(User.IsInRole("admin")) {
+						//Only displays the HTML inside of these curly braces when a user is logged in with the Admin role
+						<li class="nav-item dropdown" id="adminDropdown">
+							<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+								<span class="nav-label">
+									Admin
+									<span class="caret"></span>
+								</span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="@Url.Action("ListUsers", "Administration")">Accounts</a></li>
+								<li><a class="dropdown-item" href="@Url.Action("ListRoles", "Administration")">Roles</a></li>
+								<li><a class="dropdown-item" href="@Url.Action("Index", "Users")">Users</a></li>
+							</ul>
 						</li>
-						<li><a class="nav-link" asp-action="shop">Shop</a></li>
-						<li><a class="nav-link" asp-action="about">About us</a></li>
-						@* <li><a class="nav-link" asp-action="services">Services</a></li> *@
-						@* <li><a class="nav-link" asp-action="blog">Blog</a></li> *@
-						<li><a class="nav-link" asp-action="contact">Contact us</a></li>
-					</ul>
+					}
 
-					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-						<li><a class="nav-link" href="#"><img src="/images/user.svg"></a></li>
-						<li><a class="nav-link" href="cart.html"><img src="/images/cart.svg"></a></li>
-					</ul>
-				</div>
+					<li><a class="nav-link" asp-action="contact">Contact us</a></li>
+				</ul>
+
+				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+					<partial name="_LoginPartial" />
+
+					<li><a class="nav-link" href="cart.html"><img src="/images/cart.svg"></a></li>
+				</ul>
 			</div>
+		</div>
 
-		</nav>
-		<!-- End Header/Navigation -->
+	</nav>
+	<!-- End Header/Navigation -->
 
-		<main>
-			@RenderSection("hero", false)
-			@RenderBody()
-		</main>
+	<main class="p-3">
+		@RenderSection("hero", false)
+		@RenderBody()
+	</main>
 
-		<!-- Start Footer Section -->
-		<footer class="footer-section">
-			<div class="container relative">
+	<!-- Start Footer Section -->
+	<footer class="footer-section">
+		<div class="container relative">
 
-				<div class="sofa-img">
-					<img src="/images/sofa.png" alt="Image" class="img-fluid">
+			@* <div class="sofa-img">
+			<img src="/images/sofa.png" alt="Image" class="img-fluid">
+			</div> *@
+
+			@* <div class="row">
+			<div class="col-lg-8">
+			<div class="subscription-form">
+			<h3 class="d-flex align-items-center"><span class="me-1"><img src="/images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
+
+			<form action="#" class="row g-3">
+			<div class="col-auto">
+			<input type="text" class="form-control" placeholder="Enter your name">
+			</div>
+			<div class="col-auto">
+			<input type="email" class="form-control" placeholder="Enter your email">
+			</div>
+			<div class="col-auto">
+			<button class="btn btn-primary">
+			<span class="fa fa-paper-plane"></span>
+			</button>
+			</div>
+			</form>
+
+			</div>
+			</div>
+			</div> *@
+
+			<div class="row g-5 mb-5">
+				<div class="col-lg-4">
+					<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a></div>
+					<p class="mb-4">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant</p>
+
+					<ul class="list-unstyled custom-social">
+						<li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+						<li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+						<li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+						<li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+					</ul>
 				</div>
 
-				<div class="row">
-					<div class="col-lg-8">
-						<div class="subscription-form">
-							<h3 class="d-flex align-items-center"><span class="me-1"><img src="/images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
-
-							<form action="#" class="row g-3">
-								<div class="col-auto">
-									<input type="text" class="form-control" placeholder="Enter your name">
-								</div>
-								<div class="col-auto">
-									<input type="email" class="form-control" placeholder="Enter your email">
-								</div>
-								<div class="col-auto">
-									<button class="btn btn-primary">
-										<span class="fa fa-paper-plane"></span>
-									</button>
-								</div>
-							</form>
-
-						</div>
-					</div>
-				</div>
-
-				<div class="row g-5 mb-5">
-					<div class="col-lg-4">
-						<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a></div>
-						<p class="mb-4">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant</p>
-
-						<ul class="list-unstyled custom-social">
-							<li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
-							<li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
-							<li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
-							<li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
-						</ul>
-					</div>
-
-					<div class="col-lg-8">
-						<div class="row links-wrap">
-							<div class="col-6 col-sm-6 col-md-3">
-								<ul class="list-unstyled">
-									<li><a href="#">About us</a></li>
-									<li><a href="#">Services</a></li>
-									<li><a href="#">Blog</a></li>
-									<li><a href="#">Contact us</a></li>
-								</ul>
-							</div>
-
-							<div class="col-6 col-sm-6 col-md-3">
-								<ul class="list-unstyled">
-									<li><a href="#">Support</a></li>
-									<li><a href="#">Knowledge base</a></li>
-									<li><a href="#">Live chat</a></li>
-								</ul>
-							</div>
-
-							<div class="col-6 col-sm-6 col-md-3">
-								<ul class="list-unstyled">
-									<li><a href="#">Jobs</a></li>
-									<li><a href="#">Our team</a></li>
-									<li><a href="#">Leadership</a></li>
-									<li><a href="#">Privacy Policy</a></li>
-								</ul>
-							</div>
-
-							<div class="col-6 col-sm-6 col-md-3">
-								<ul class="list-unstyled">
-									<li><a href="#">Nordic Chair</a></li>
-									<li><a href="#">Kruzo Aero</a></li>
-									<li><a href="#">Ergonomic Chair</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-
-				</div>
-
-				<div class="border-top copyright">
-					<div class="row pt-4">
-						<div class="col-lg-6">
-							<p class="mb-2 text-center text-lg-start">
-								Copyright &copy;<script>document.write(new Date().getFullYear());</script>. 
-								All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> 
-								Distributed By <a hreff="https://themewagon.com">ThemeWagon</a>
-								<!-- License information: https://untree.co/license/ -->
-							</p>
+				<div class="col-lg-8">
+					<div class="row links-wrap">
+						<div class="col-6 col-sm-6 col-md-3">
+							<ul class="list-unstyled">
+								<li><a href="#">About us</a></li>
+								<li><a href="#">Services</a></li>
+								<li><a href="#">Blog</a></li>
+								<li><a href="#">Contact us</a></li>
+							</ul>
 						</div>
 
-						<div class="col-lg-6 text-center text-lg-end">
-							<ul class="list-unstyled d-inline-flex ms-auto">
-								<li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+						<div class="col-6 col-sm-6 col-md-3">
+							<ul class="list-unstyled">
+								<li><a href="#">Support</a></li>
+								<li><a href="#">Knowledge base</a></li>
+								<li><a href="#">Live chat</a></li>
+							</ul>
+						</div>
+
+						<div class="col-6 col-sm-6 col-md-3">
+							<ul class="list-unstyled">
+								<li><a href="#">Jobs</a></li>
+								<li><a href="#">Our team</a></li>
+								<li><a href="#">Leadership</a></li>
 								<li><a href="#">Privacy Policy</a></li>
 							</ul>
 						</div>
 
+						<div class="col-6 col-sm-6 col-md-3">
+							<ul class="list-unstyled">
+								<li><a href="#">Nordic Chair</a></li>
+								<li><a href="#">Kruzo Aero</a></li>
+								<li><a href="#">Ergonomic Chair</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 
 			</div>
-		</footer>
-		<!-- End Footer Section -->	
 
-		<script src="/js/bootstrap.bundle.min.js"></script>
-		<script src="/js/tiny-slider.js"></script>
-		<script src="/js/custom.js"></script>
+			<div class="border-top copyright">
+				<div class="row pt-4">
+					<div class="col-lg-6">
+						<p class="mb-2 text-center text-lg-start">
+							Copyright &copy;<script>document.write(new Date().getFullYear());</script>.
+							All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a>
+							Distributed By <a hreff="https://themewagon.com">ThemeWagon</a>
+							<!-- License information: https://untree.co/license/ -->
+						</p>
+					</div>
 
-		@await RenderSectionAsync("scripts", false)
+					<div class="col-lg-6 text-center text-lg-end">
+						<ul class="list-unstyled d-inline-flex ms-auto">
+							<li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+							<li><a href="#">Privacy Policy</a></li>
+						</ul>
+					</div>
 
-	</body>
+				</div>
+			</div>
+
+		</div>
+	</footer>
+	<!-- End Footer Section -->
+
+
+	<!-- jquery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+	<script src="~/js/popper.min.js"></script>
+	<script src="~/js/bootstrap.js"></script>
+	<script src="/js/bootstrap.bundle.min.js"></script>
+	<script src="/js/tiny-slider.js"></script>
+
+	<!-- DataTables -->
+	<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+	<!-- ajax -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js" integrity="sha512-DedNBWPF0hLGUPNbCYfj8qjlEnNE92Fqn7xd3Sscfu7ipy7Zu33unHdugqRD3c4Vj7/yLv+slqZhMls/4Oc7Zg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script src="/js/custom.js"></script>
+
+	<script>
+		let url = window.location.href.toString();
+
+		//For each <li> in the <nav class="navbar-nav">, apply the following function
+		$('.navbar-nav li').each(function () {
+			let link = $(this).find('a').attr('href');
+
+			//If the <a> tag inside a <li> is linked to the current URL
+			if (url.endsWith(link))
+				$(this).addClass('active');
+
+		});
+
+	</script>
+
+	@await RenderSectionAsync("scripts", false)
+
+</body>
 
 </html>

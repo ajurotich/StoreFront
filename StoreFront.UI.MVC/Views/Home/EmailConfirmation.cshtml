@@ -1,0 +1,71 @@
+﻿@model StoreFront.UI.MVC.Models.ContactViewModel;
+
+@{
+	ViewData["Title"] = "Email Confirmation";
+}
+
+@section hero {
+	<!-- Start Hero Section -->
+	<div class="hero">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class="col-lg-5">
+					<div class="intro-excerpt">
+						<h1>Contact</h1>
+						<p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
+						<p>
+							<a asp-action="Shop" class="btn btn-secondary me-2">Shop Now</a>
+							<a asp-action="Shop" class="btn btn-white-outline">Explore</a>
+						</p>
+					</div>
+				</div>
+				<div class="col-lg-7">
+					<div class="hero-img-wrap">
+						<img src="/images/couch.png" class="img-fluid">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Hero Section -->
+}
+
+<!-- Start Contact Form -->
+<div class="untree_co-section">
+	<div class="container">
+
+		<div class="block">
+			<div class="row justify-content-center">
+				<div class="col-md-8 col-lg-8 pb-4">
+
+					<h3 class="alert alert-success">Message Sent!</h3>
+					<p>
+						Thank you for contacting us, @Model.Name! A member of our team
+						will respond to your message using the provided email address,
+						@Model.Email, as soon as possible.
+					</p>
+
+					<br />
+
+					<div class="offset-md-3 col-md-6 text-center">
+						<p>
+							The following message was sent on
+							@DateTime.Now.Date.ToShortDateString() at
+							@DateTime.Now.ToShortTimeString() :
+						</p>
+					</div>
+					<div class="offset-md-3 col-md-6">
+						<p>
+							<em>@Model.Message</em>
+						</p>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+<!-- End Contact Form -->

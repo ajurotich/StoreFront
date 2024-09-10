@@ -1,4 +1,6 @@
-﻿@{
+﻿@model StoreFront.UI.MVC.Models.ContactViewModel;
+
+@{
 	ViewData["Title"] = "Contact";
 }
 
@@ -10,11 +12,7 @@
 				<div class="col-lg-5">
 					<div class="intro-excerpt">
 						<h1>Contact</h1>
-						<p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
-						<p>
-							<a asp-action="Shop" class="btn btn-secondary me-2">Shop Now</a>
-							<a asp-action="Shop" class="btn btn-white-outline">Explore</a>
-						</p>
+						<p class="mb-4">Leave a message and we'll get back to you within 4-5 business days.</p>
 					</div>
 				</div>
 				<div class="col-lg-7">
@@ -80,32 +78,40 @@
 						</div>
 					</div>
 
-					<form>
+					<form asp-action="Contact">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<div class="form-group">
+							<label class="text-black" asp-for="Email">Email address</label>
+							<input type="email" class="form-control" id="email">
+							<span asp-validation-for="Email"></span>
+						</div>
+
 						<div class="row">
 							<div class="col-6">
 								<div class="form-group">
-									<label class="text-black" for="fname">First name</label>
-									<input type="text" class="form-control" id="fname">
+									<label asp-for="Name" class="text-black">Name</label>
+									<input asp-for="Name" type="text" class="form-control" id="fname" />
+									<span asp-validation-for="Name"></span>
 								</div>
 							</div>
 							<div class="col-6">
 								<div class="form-group">
-									<label class="text-black" for="lname">Last name</label>
-									<input type="text" class="form-control" id="lname">
+									<label class="text-black" asp-for="Subject">Subject</label>
+									<input asp-for="Subject" type="text" class="form-control" id="lname">
+									<span asp-validation-for="Subject"></span>
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="text-black" for="email">Email address</label>
-							<input type="email" class="form-control" id="email">
-						</div>
 
 						<div class="form-group mb-5">
-							<label class="text-black" for="message">Message</label>
-							<textarea name="" class="form-control" id="message" cols="30" rows="5"></textarea>
+							<label class="text-black" asp-for="Message">Message</label>
+							<textarea asp-for="Message" name="" class="form-control" id="message" cols="30" rows="5"></textarea>
+							<span asp-validation-for="Message"></span>
 						</div>
 
-						<button type="submit" class="btn btn-primary-hover-outline">Send Message</button>
+						<div class="text-center">
+							<input type="submit" value="Submit" class="btn btn-lg btn-primary-hover-outline"></input>
+						</div>
 					</form>
 
 				</div>

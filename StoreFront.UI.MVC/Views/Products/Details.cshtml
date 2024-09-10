@@ -1,0 +1,54 @@
+﻿@model StoreFront.Data.EF.Models.Product
+
+@{
+	ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+	<h4>Product</h4>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Price)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Price)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.IsStock)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.IsStock)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.CurrentStock)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.CurrentStock)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.IsDiscontinued)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.IsDiscontinued)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.StockOnOrder)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.StockOnOrder)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Block)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Block.Name)
+		</dd>
+	</dl>
+</div>
+<div>
+	<a asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a> |
+	<a asp-action="Index">Back to List</a>
+</div>
