@@ -1,0 +1,19 @@
+﻿
+/* custom data table */
+
+#table thead tr :first-child {
+	pointer-events: none;
+}
+
+#table thead tr :first-child::before,
+#table thead tr :first-child::after {
+	display: none;
+}
+
+#table td {
+	font-size: larger;
+}
+
+#table tbody tr:hover {
+	background: #dce5e4;
+}

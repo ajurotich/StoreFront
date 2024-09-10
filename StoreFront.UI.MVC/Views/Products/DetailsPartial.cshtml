@@ -1,0 +1,50 @@
+﻿@model StoreFront.Data.EF.Models.Product
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+
+@if(User.IsInRole("admin")) {
+	<div class="modal-header">
+		<a asp-action="Edit" asp-controller="Products" asp-route-id="@Model.ProductId" class="btn btn-sm btn-warning mx-1">Edit</a>
+		<a asp-action="Delete" asp-controller="Products" asp-route-id="@Model.ProductId" class="btn btn-sm btn-danger mx-1">Delete</a>
+		@* <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> *@
+	</div>
+}
+
+<div class="modal-body" id="productDetailsModalBody">
+	<div class="p-3">
+		<div class="row py-3">
+			<div class="col-4 text-center">
+				<img src="~/images/blocks/@Model.Block.Image" class="img-fluid">
+			</div>
+			<div class="offset-md-1 col-7">
+				<div class="row">
+					<h1 class="col-8 text-uppercase">
+						@Model.Block.Name
+					</h1>
+					<h3 class="col-4 text-end">
+						@Html.DisplayFor(model => @Model.Price)
+					</h3>
+				</div>
+				<hr />
+				<div class="row">
+					<h5 class="col-12 py-2 lh-base">
+						@Model.Block.Description
+					</h5>
+				</div>
+				<hr />
+				<div class="row">
+					<h6>
+						[ DETAILS ]
+					</h6>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@if(signInManager.IsSignedIn(User)) {
+	<div class="modal-footer">
+		[add to cart]
+	</div>
+}
+

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace StoreFront.UI.MVC.Controllers;
 
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "admin")]
 public class AdministrationController : Controller {
 	#region Props/Ctors
 	private readonly RoleManager<IdentityRole> roleManager;
@@ -281,4 +281,3 @@ public class AdministrationController : Controller {
 	#endregion
 	#endregion
 }
-

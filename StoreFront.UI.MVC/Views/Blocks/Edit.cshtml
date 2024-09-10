@@ -1,0 +1,129 @@
+﻿@model StoreFront.Data.EF.Models.Block
+
+@{
+	ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Block</h4>
+<hr />
+
+@{
+	/*
+	* EDIT File Upload Steps
+	* ** NOTE: These steps assume that you have already implemented file upload in the Create view/action.
+	*		If you have not, implement that first, and then come back to edit. **
+	*
+	* 1) Modify Edit View
+	*	- Add <input type="hidden" asp-for="[PropertyName]" /> for the class's image property
+	*	- Add enctype="multipart/form-data" to the <form>
+	*	- Comment out <input type="text"...> for original image property
+	*	- Replace with <input type="file" asp-for="[IFormFile Prop Name]" />
+	*
+	* 2) Add code to handle file upload in Controller (Edit POST)
+	*	- BIND the IFormFile property in the method signature
+	*	- Add logic to process the file upload --> save the file to the web server, save the file name to the DB
+	*		- Note: this logic is slightly different than what we needed for the create, so when doing this in StoreFront,
+	*			be sure to refer to the Edit example.
+	*/
+}
+
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Edit" enctype="multipart/form-data">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="BlockId" />
+			<input type="hidden" asp-for="Image" />
+			<div class="form-group">
+				<label asp-for="Name" class="control-label"></label>
+				<input asp-for="Name" class="form-control" />
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Description" class="control-label"></label>
+				<input asp-for="Description" class="form-control" />
+				<span asp-validation-for="Description" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="CategoryId" class="control-label"></label>
+				<select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+				<span asp-validation-for="CategoryId" class="text-danger"></span>
+			</div>
+			<div class="form-group form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" asp-for="IsRenewable" /> @Html.DisplayNameFor(model => model.IsRenewable)
+				</label>
+			</div>
+			<div class="form-group form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" asp-for="IsStackable" /> @Html.DisplayNameFor(model => model.IsStackable)
+				</label>
+			</div>
+			<div class="form-group">
+				<label asp-for="StackSize" class="control-label"></label>
+				<input asp-for="StackSize" class="form-control" />
+				<span asp-validation-for="StackSize" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="ProperTool" class="control-label"></label>
+				<input asp-for="ProperTool" class="form-control" />
+				<span asp-validation-for="ProperTool" class="text-danger"></span>
+			</div>
+			<div class="form-group form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" asp-for="Luminous" /> @Html.DisplayNameFor(model => model.Luminous)
+				</label>
+			</div>
+			<div class="form-group">
+				<label asp-for="LightLevel" class="control-label"></label>
+				<input asp-for="LightLevel" class="form-control" />
+				<span asp-validation-for="LightLevel" class="text-danger"></span>
+			</div>
+			<div class="form-group form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" asp-for="Transparent" /> @Html.DisplayNameFor(model => model.Transparent)
+				</label>
+			</div>
+			<div class="form-group">
+				<label asp-for="IsWaterloggable" class="control-label"></label>
+				<input asp-for="IsWaterloggable" class="form-control" />
+				<span asp-validation-for="IsWaterloggable" class="text-danger"></span>
+			</div>
+			<div class="form-group form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" asp-for="Flammable" /> @Html.DisplayNameFor(model => model.Flammable)
+				</label>
+			</div>
+			<div class="form-group">
+				<label asp-for="SourceId" class="control-label"></label>
+				<select asp-for="SourceId" class="form-control" asp-items="ViewBag.SourceId"></select>
+				<span asp-validation-for="SourceId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Image" class="control-label"></label>
+				@* <input asp-for="Image" class="form-control" /> *@
+				<input type="file" asp-for="BlockImage" class="form-control" />
+				<span asp-validation-for="Image" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="RelatedBlockId" class="control-label"></label>
+				<select asp-for="RelatedBlockId" class="form-control" asp-items="ViewBag.RelatedBlockId"></select>
+				<span asp-validation-for="RelatedBlockId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
