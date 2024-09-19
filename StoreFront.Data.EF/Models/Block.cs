@@ -33,9 +33,9 @@ public partial class Block
 
     public int? SourceId { get; set; }
 
-    public string? Image { get; set; }
-
     public int? RelatedBlockId { get; set; }
+
+    public string? Image { get; set; }
 
     public virtual Category? Category { get; set; }
 

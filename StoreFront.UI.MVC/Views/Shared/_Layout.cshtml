@@ -45,8 +45,7 @@
 					<li><a class="nav-link" href="~/">Home</a></li>
 					<li><a class="nav-link" asp-action="index" asp-controller="products">Shop</a></li>
 					<li><a class="nav-link disabled text-opacity-25" asp-action="about">About us</a></li>
-					@* <li><a class="nav-link" asp-action="services">Services</a></li> *@
-					@* <li><a class="nav-link" asp-action="blog">Blog</a></li> *@
+					<li><a class="nav-link disabled text-opacity-25" asp-action="contact">Contact us</a></li>
 
 					@if(User.IsInRole("admin")) {
 						//Only displays the HTML inside of these curly braces when a user is logged in with the Admin role
@@ -65,13 +64,14 @@
 						</li>
 					}
 
-					<li><a class="nav-link" asp-action="contact">Contact us</a></li>
 				</ul>
 
 				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 					<partial name="_LoginPartial" />
 
-					<li><a class="nav-link" href="cart.html"><img src="/images/cart.svg"></a></li>
+					<li><a class="nav-link" asp-action="Index" asp-controller="Cart">
+						<img src="/images/cart.svg">
+					</a></li>
 				</ul>
 			</div>
 		</div>

@@ -42,9 +42,10 @@
 	</div>
 </div>
 
-@if(signInManager.IsSignedIn(User)) {
-	<div class="modal-footer">
-		[add to cart]
-	</div>
-}
+<div class="modal-footer">
+	<a class="btn btn-success" asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.ProductId">
+		Add to Cart
+	</a>
+</div>
+
 

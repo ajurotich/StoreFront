@@ -2,7 +2,7 @@
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-namespace GadgetStore.UI.MVC.Utilities;
+namespace StoreFront.UI.MVC.Utilities;
 
 public class ImageUtility {
 	public static void ResizeImage(string savePath, string fileName, Image image, int maxImgSize, int maxThumbSize) {

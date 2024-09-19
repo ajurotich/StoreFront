@@ -40,7 +40,7 @@ public partial class McstoreContext : DbContext {
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-		=> optionsBuilder.UseSqlServer("Server=.\\sqlexpress;Database=MCStore;Trusted_Connection=true;Encrypt=false;MultipleActiveResultSets=true;");
+		=> optionsBuilder.UseSqlServer("Server=.\\sqlexpress;Database=MCStore;Trusted_Connection=true;MultipleActiveResultSets=true;Encrypt=false");
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
 		modelBuilder.Entity<AspNetRole>(entity => {
@@ -114,7 +114,9 @@ public partial class McstoreContext : DbContext {
 			entity.Property(e => e.Description)
 				.HasMaxLength(200)
 				.IsUnicode(false);
-			entity.Property(e => e.Image).HasColumnType("image");
+			entity.Property(e => e.Image)
+				.HasMaxLength(75)
+				.IsUnicode(false);
 			entity.Property(e => e.Name)
 				.HasMaxLength(20)
 				.IsUnicode(false);
@@ -149,22 +151,19 @@ public partial class McstoreContext : DbContext {
 
 		modelBuilder.Entity<Order>(entity => {
 			entity.Property(e => e.OrderId).HasColumnName("OrderID");
-			entity.Property(e => e.BuyerId).HasColumnName("BuyerID");
+			entity.Property(e => e.BuyerId)
+				.HasMaxLength(100)
+				.IsUnicode(false)
+				.HasColumnName("BuyerID");
 			entity.Property(e => e.DateOrdered).HasColumnType("datetime");
 			entity.Property(e => e.DeliveryCoords)
 				.HasMaxLength(20)
 				.IsUnicode(false);
-			entity.Property(e => e.SupplierId).HasColumnName("SupplierID");
 
-			entity.HasOne(d => d.Buyer).WithMany(p => p.OrderBuyers)
+			entity.HasOne(d => d.Buyer).WithMany(p => p.Orders)
 				.HasForeignKey(d => d.BuyerId)
 				.OnDelete(DeleteBehavior.ClientSetNull)
 				.HasConstraintName("FK_Orders_Users");
-
-			entity.HasOne(d => d.Supplier).WithMany(p => p.OrderSuppliers)
-				.HasForeignKey(d => d.SupplierId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_Orders_Users1");
 		});
 
 		modelBuilder.Entity<OrderProduct>(entity => {
@@ -209,7 +208,10 @@ public partial class McstoreContext : DbContext {
 		});
 
 		modelBuilder.Entity<User>(entity => {
-			entity.Property(e => e.UserId).HasColumnName("UserID");
+			entity.Property(e => e.UserId)
+				.HasMaxLength(100)
+				.IsUnicode(false)
+				.HasColumnName("UserID");
 			entity.Property(e => e.HouseCoords)
 				.HasMaxLength(20)
 				.IsUnicode(false);

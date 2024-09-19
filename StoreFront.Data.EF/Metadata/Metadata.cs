@@ -78,13 +78,10 @@ public class OrderMetadata {
 	public DateTime? DateOrdered { get; set; }
 
 	[Required]
-	[Display(Name = "Deliver to Buyer's Location?")]
-	public bool DeliverToBuyerLocation { get; set; }
-
 	[DisplayFormat(NullDisplayText = "Same as Buyer's Location")]
 	[Display(Name = "Delivery Coordinates?")]
 	[StringLength(20)]
-	public string? DeliveryCoords { get; set; }
+	public string DeliveryCoords { get; set; } = null!;
 
 }
 
@@ -137,7 +134,7 @@ public class SourceMetadata {
 public class UserMetadata {
 
 	[Required]
-	[StringLength(20)]
+	[StringLength(100)]
 	public string Name { get; set; } = null!;
 
 	[DisplayFormat(NullDisplayText = "No coordinates provided")]
