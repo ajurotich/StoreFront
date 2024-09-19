@@ -1,0 +1,132 @@
+﻿@model Dictionary<int, StoreFront.UI.MVC.Models.CartItemViewModel>?
+
+@{
+	ViewData["Title"] = "Cart";
+	decimal? cartTotal = 0;
+}
+
+@section hero {
+	<div class="hero">
+		<div class="container">
+			<div class="col-lg-5">
+				<div class="intro-excerpt">
+					<h1>
+						@ViewData["Title"]
+					</h1>
+					<p class="mb-4">
+						Tax is already included in the listed prices
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+
+<div class="untree_co-section product-section before-footer-section">
+	<div class="container">
+
+		@if(Model == null || Model.Count == 0 || ViewBag.CartMessage != null) {
+			<p class="alert alert-warning text-center">
+				@ViewBag.CartMessage
+			</p>
+		}
+		else {
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="col-2"></th>
+						<th class="col-3">Block</th>
+						<th class="col-2">Price</th>
+						<th class="col-1">Quantity</th>
+						<th class="col-2">Total</th>
+						<th class="col-2"></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach(var item in Model) {
+						<tr class="align-middle">
+							<td class="col-2 text-center">
+								<button type="button" class="detailsLink btn bg-transparent border-0 p-0" id="@item.Value.Product.ProductId" data-toggle="modal" data-target="#productDetailsModal">
+								image here
+							@*
+									<img src="~/images/blocks/t_@item.Value.Product.Block.Image" class="img-fluid product-thumbnail">
+							*@
+								</button>
+							</td>
+							<td class="col-3">
+								<button type="button" class="detailsLink btn bg-transparent border-0 text-black p-0" id="@item.Value.Product.ProductId" data-toggle="modal" data-target="#productDetailsModal">
+									@item.Value.Product.Block.Name
+								</button>
+							</td>
+							<th class="col-2">
+								@string.Format($"{item.Value.Product.Price:c}")
+							</th>
+							<th class="col-1">
+								<p class="text-warning">
+									<form asp-action="UpdateCart">
+										<input type="hidden" name="productID" value="@item.Value.Product.ProductId" />
+										<input type="number" name="quantity" value="@item.Value.Quantity" />
+										<input type="submit" value="Update Cart" class="btn-sm" />
+									</form>
+								</p>
+							</th>
+							<th class="col-2">@string.Format($"{(cartTotal += item.Value.Product.Price * item.Value.Quantity):c}")</th>
+							<th class="col-2">
+								<a class="btn btn-sm btn-danger" asp-action="RemoveItem" asp-controller="Cart" asp-route-id="@item.Key">Remove</a>
+							</th>
+						</tr>
+					}
+				</tbody>
+			</table>
+			<div class="alert alert-dark text-center pt-4">
+				@if(User.Identity.IsAuthenticated) {
+					<a asp-action="SubmitOrder" asp-controller="Cart" class="btn btn-lg btn-success">
+						Submit Order
+					</a>
+				}
+				else {
+					<p class="alert alert-danger">
+						You must be signed in to place an order
+					</p>
+					<p class="disabled btn btn-lg btn-outline-success">
+						Submit Order
+					</p>
+				}
+			</div>
+		}
+
+	</div>
+</div>
+
+<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-xl">
+		<div class="modal-content bg-light"></div>
+	</div>
+</div>
+
+
+@section Scripts {
+	<script>
+
+		//showing details modal
+		$('.detailsLink').on('click', function () {
+			let productID = $(this).attr('id');
+
+			$("#productDetailsModal .modal-content").load("/products/DetailsPartial/" + productID);
+
+		})
+
+		//data tables
+		$(document).ready(function () {
+			$('.table').DataTable();
+			console.log("\n\n-----");
+			console.log(@Model);
+			console.log(@Model.Values.First());
+			console.log(@Model.Values.First().Product);
+			console.log(@Model.Values.First().Product.Block);
+			console.log("-----\n\n");
+		});
+
+	</script>
+}

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using StoreFront.Data.EF.Models;
 using System.Drawing;
-using GadgetStore.UI.MVC.Utilities;
+using StoreFront.UI.MVC.Utilities;
 using Microsoft.AspNetCore.Authorization;
 
 namespace StoreFront.UI.MVC.Controllers {
@@ -169,7 +169,7 @@ namespace StoreFront.UI.MVC.Controllers {
 				#region file upload
 
 				//save old image name to delete if replacement comes
-				string oldImgName = block.Image;
+				string? oldImgName = block.Image;
 
 				if(block.BlockImage != null) {
 

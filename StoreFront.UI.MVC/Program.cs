@@ -4,6 +4,7 @@ using StoreFront.Data.EF.Models;
 using StoreFront.UI.MVC.Data;
 
 namespace StoreFront.UI.MVC;
+
 public class Program {
 	public static void Main(string[] args) {
 		var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,15 @@ public class Program {
 			.AddEntityFrameworkStores<ApplicationDbContext>();
 		builder.Services.AddControllersWithViews();
 
+		//register session for shopping cart
+		builder.Services.AddSession(
+			options => {
+				options.IdleTimeout = TimeSpan.FromMinutes(10);// duration a session is stored in memory (default is 20min)
+				options.Cookie.HttpOnly = true; // Allows us to set cookie options over nonHTTPS secure connections
+				options.Cookie.IsEssential = true; // cannot be declined for session to work
+			}
+		);
+
 		var app = builder.Build();
 
 		// Configure the HTTP request pipeline.
@@ -39,6 +49,9 @@ public class Program {
 		app.UseStaticFiles();
 
 		app.UseRouting();
+
+		//this line below MUST come AFTER UseRouting and BEFORE UseAuthentication
+		app.UseSession();// implement the session service in our app
 
 		app.UseAuthorization();
 
